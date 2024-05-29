@@ -1,0 +1,10 @@
+module(
+    name = "rust_vu128",
+    version = "1.0.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(
+    name = "rules_rust",
+    version = "0.45.1",
+)

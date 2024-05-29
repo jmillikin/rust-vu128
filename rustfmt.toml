@@ -1,0 +1,5 @@
+edition = "2018"
+max_width = 80
+hard_tabs = true
+imports_layout = "HorizontalVertical"
+match_block_trailing_comma = true
