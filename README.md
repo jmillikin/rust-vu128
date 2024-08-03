@@ -27,7 +27,7 @@ MSB ------------------ LSB
 01010101 11100110 11011110  Continuation bits `110` added
     0x55     0xE6     0xDE  In hexadecimal
 
-        [0x55, 0xE6, 0xDE]  Encoded output (order is little-endian)
+        [0xDE, 0xE6, 0x55]  Encoded output (order is little-endian)
 ```
 
 Values in the range `[2^28, 2^128)` are encoded as a binary length prefix,
