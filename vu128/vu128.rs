@@ -363,7 +363,8 @@ pub fn decode_u64(buf: &[u8; 9]) -> (u64, usize) {
 
 	const LEN_MASK: u8 = 0b111;
 	let len = buf[0] & 0x0F;
-	let mask = u64::MAX >> ((len & LEN_MASK) ^ LEN_MASK);
+	let mask_octets = (len & LEN_MASK) ^ LEN_MASK;
+	let mask = u64::MAX >> (mask_octets * 8);
 	(value & mask, (len + 2) as usize)
 }
 
@@ -401,7 +402,8 @@ pub fn decode_u128(buf: &[u8; 17]) -> (u128, usize) {
 	});
 	const LEN_MASK: u8 = 0b1111;
 	let len = buf[0] & 0x0F;
-	let mask = u128::MAX >> ((len & LEN_MASK) ^ LEN_MASK);
+	let mask_octets = (len & LEN_MASK) ^ LEN_MASK;
+	let mask = u128::MAX >> (mask_octets * 8);
 	(value & mask, (len + 2) as usize)
 }
 
