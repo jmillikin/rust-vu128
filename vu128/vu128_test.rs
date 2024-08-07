@@ -134,11 +134,14 @@ fn test_encode_u32() {
 #[test]
 fn test_decode_u32() {
 	for (expect, encoded_value) in U32_TEST_CASES {
-		let mut buf = [0u8; 5];
-		(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
-		let got = vu128::decode_u32(&buf);
-		let expect = (*expect, encoded_value.len());
-		assert_expected!(decode_u32, encoded_value, expect, got);
+		for padding in [0u8, 255] {
+			let mut buf = [0u8; 5];
+			(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
+			buf[encoded_value.len()..].fill(padding);
+			let got = vu128::decode_u32(&buf);
+			let expect = (*expect, encoded_value.len());
+			assert_expected!(decode_u32, encoded_value, expect, got);
+		}
 	}
 }
 
@@ -153,12 +156,15 @@ fn test_encode_u64() {
 
 #[test]
 fn test_decode_u64() {
-	for (expect, encoded_value) in U64_TEST_CASES {
-		let mut buf = [0u8; 9];
-		(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
-		let got = vu128::decode_u64(&buf);
-		let expect = (*expect, encoded_value.len());
-		assert_expected!(decode_u64, encoded_value, expect, got);
+	for padding in [0u8, 255] {
+		for (expect, encoded_value) in U64_TEST_CASES {
+			let mut buf = [0u8; 9];
+			(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
+			buf[encoded_value.len()..].fill(padding);
+			let got = vu128::decode_u64(&buf);
+			let expect = (*expect, encoded_value.len());
+			assert_expected!(decode_u64, encoded_value, expect, got);
+		}
 	}
 }
 
@@ -180,19 +186,23 @@ fn test_encode_u128() {
 
 #[test]
 fn test_decode_u128() {
-	for (expect, encoded_value) in U32_TEST_CASES {
-		let mut buf = [0u8; 17];
-		(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
-		let got = vu128::decode_u128(&buf);
-		let expect = (*expect as u128, encoded_value.len());
-		assert_expected!(decode_u128, encoded_value, expect, got);
-	}
-	for (expect, encoded_value) in U64_TEST_CASES {
-		let mut buf = [0u8; 17];
-		(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
-		let got = vu128::decode_u128(&buf);
-		let expect = (*expect as u128, encoded_value.len());
-		assert_expected!(decode_u128, encoded_value, expect, got);
+	for padding in [0u8, 255] {
+		for (expect, encoded_value) in U32_TEST_CASES {
+			let mut buf = [0u8; 17];
+			(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
+			buf[encoded_value.len()..].fill(padding);
+			let got = vu128::decode_u128(&buf);
+			let expect = (*expect as u128, encoded_value.len());
+			assert_expected!(decode_u128, encoded_value, expect, got);
+		}
+		for (expect, encoded_value) in U64_TEST_CASES {
+			let mut buf = [0u8; 17];
+			(&mut buf[0..encoded_value.len()]).copy_from_slice(encoded_value);
+			buf[encoded_value.len()..].fill(padding);
+			let got = vu128::decode_u128(&buf);
+			let expect = (*expect as u128, encoded_value.len());
+			assert_expected!(decode_u128, encoded_value, expect, got);
+		}
 	}
 }
 

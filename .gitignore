@@ -2,3 +2,4 @@
 /MODULE.bazel.lock
 /Cargo.lock
 /target
+/.idea
