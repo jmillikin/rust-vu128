@@ -1,6 +1,6 @@
 [package]
 name = "vu128"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["John Millikin <john@john-millikin.com>"]
 edition = "2018"
 description = "Efficient variable-length integers"
